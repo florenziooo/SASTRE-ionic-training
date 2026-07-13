@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/*
+ * Light theme tokens mapped to the project palette.
+ *   #F8FAFC  background (slate-50)
+ *   #FFFFFF  card / surface
+ *   #64748B  muted foreground / borders
+ *   #0F172A  foreground (slate-900)
+ * Usage: bg-background, bg-card, text-foreground, text-muted,
+ *        border-muted/30, bg-muted/10, etc.
+ */
+@theme {
+  --color-background: #f8fafc;
+  --color-card: #ffffff;
+  --color-muted: #64748b;
+  --color-foreground: #0f172a;
+}

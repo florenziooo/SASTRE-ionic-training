@@ -31,16 +31,19 @@ import '@ionic/vue/css/display.css';
 
 /* @import '@ionic/vue/css/palettes/dark.always.css'; */
 /* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+/* @import '@ionic/vue/css/palettes/dark.system.css'; */
 
 /* Theme variables */
 import './theme/variables.css';
+
+/* Tailwind CSS */
+import './theme/tailwind.css';
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, { mode: 'md' })
   .use(router)
   .use(pinia);
 

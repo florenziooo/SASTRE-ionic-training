@@ -1,2 +1,165 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* =============================================================
+ *  TaskFlow — light theme
+ *  Palette: #F8FAFC  #FFFFFF  #64748B  #0F172A
+ * ============================================================= */
+
+:root {
+  /* ---- Core surfaces & text ---- */
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15, 23, 42;
+
+  /* Stepped shades (bg -> fg) used by borders, dividers, muted UI */
+  --ion-color-step-50: #f1f5f9;
+  --ion-color-step-100: #e8edf2;
+  --ion-color-step-150: #dee5ec;
+  --ion-color-step-200: #d3dce6;
+  --ion-color-step-250: #c7d2e0;
+  --ion-color-step-300: #bcc8d9;
+  --ion-color-step-350: #b0bdd0;
+  --ion-color-step-400: #a2b0c4;
+  --ion-color-step-450: #93a1b5;
+  --ion-color-step-500: #8493a6;
+  --ion-color-step-550: #758598;
+  --ion-color-step-600: #66768a;
+  --ion-color-step-650: #59687c;
+  --ion-color-step-700: #4c5b6e;
+  --ion-color-step-750: #3f4d60;
+  --ion-color-step-800: #333f52;
+  --ion-color-step-850: #283244;
+  --ion-color-step-900: #1c2536;
+  --ion-color-step-950: #101827;
+
+  /* ---- Chrome: toolbar / tab bar / items / cards ---- */
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #0f172a;
+
+  --ion-tab-bar-background: #ffffff;
+  --ion-tab-bar-color: #64748b;
+  --ion-tab-bar-color-selected: #6366f1;
+
+  --ion-item-background: #ffffff;
+  --ion-item-color: #0f172a;
+  --ion-item-border-color: rgba(100, 116, 139, 0.22);
+
+  --ion-card-background: #ffffff;
+  --ion-card-color: #0f172a;
+
+  --ion-overlay-background-color: #ffffff;
+
+  /* ---- Named colors ---- */
+  /* primary = indigo accent */
+  --ion-color-primary: #6366f1;
+  --ion-color-primary-rgb: 99, 102, 241;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #4f46e5;
+  --ion-color-primary-tint: #818cf8;
+
+  /* secondary = slate */
+  --ion-color-secondary: #64748b;
+  --ion-color-secondary-rgb: 100, 116, 139;
+  --ion-color-secondary-contrast: #f8fafc;
+  --ion-color-secondary-contrast-rgb: 248, 250, 252;
+  --ion-color-secondary-shade: #55606f;
+  --ion-color-secondary-tint: #7c8896;
+
+  /* tertiary = slate */
+  --ion-color-tertiary: #64748b;
+  --ion-color-tertiary-rgb: 100, 116, 139;
+  --ion-color-tertiary-contrast: #f8fafc;
+  --ion-color-tertiary-contrast-rgb: 248, 250, 252;
+  --ion-color-tertiary-shade: #55606f;
+  --ion-color-tertiary-tint: #7c8896;
+
+  /* success = slate (kept on-palette) */
+  --ion-color-success: #64748b;
+  --ion-color-success-rgb: 100, 116, 139;
+  --ion-color-success-contrast: #f8fafc;
+  --ion-color-success-contrast-rgb: 248, 250, 252;
+  --ion-color-success-shade: #55606f;
+  --ion-color-success-tint: #7c8896;
+
+  /* warning = slate */
+  --ion-color-warning: #64748b;
+  --ion-color-warning-rgb: 100, 116, 139;
+  --ion-color-warning-contrast: #f8fafc;
+  --ion-color-warning-contrast-rgb: 248, 250, 252;
+  --ion-color-warning-shade: #55606f;
+  --ion-color-warning-tint: #7c8896;
+
+  /* danger = red — kept distinct so destructive
+     actions (delete) stay recognizable */
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #dc2626;
+  --ion-color-danger-tint: #f87171;
+
+  /* medium = slate (muted icons/text) */
+  --ion-color-medium: #64748b;
+  --ion-color-medium-rgb: 100, 116, 139;
+  --ion-color-medium-contrast: #0f172a;
+  --ion-color-medium-contrast-rgb: 15, 23, 42;
+  --ion-color-medium-shade: #55606f;
+  --ion-color-medium-tint: #7c8896;
+
+  /* light = surface */
+  --ion-color-light: #ffffff;
+  --ion-color-light-rgb: 255, 255, 255;
+  --ion-color-light-contrast: #0f172a;
+  --ion-color-light-contrast-rgb: 15, 23, 42;
+  --ion-color-light-shade: #f1f5f9;
+  --ion-color-light-tint: #ffffff;
+
+  /* dark = foreground (so color="dark" text reads dark on light bg) */
+  --ion-color-dark: #0f172a;
+  --ion-color-dark-rgb: 15, 23, 42;
+  --ion-color-dark-contrast: #f8fafc;
+  --ion-color-dark-contrast-rgb: 248, 250, 252;
+  --ion-color-dark-shade: #0b1220;
+  --ion-color-dark-tint: #1e293b;
+}
+
+/* Toolbar: seamless with page + a hairline bottom border */
+ion-toolbar {
+  --background: #ffffff;
+  --color: #0f172a;
+  --border-width: 0 0 0.55px 0;
+  --border-color: rgba(100, 116, 139, 0.25);
+  --min-height: 56px;
+}
+
+/* Checkbox: indigo fill when checked, slate outline when idle */
+ion-checkbox {
+  --border-color: #94a3b8;
+  --border-color-checked: #6366f1;
+  --checkbox-background-checked: #6366f1;
+  --checkmark-color: #ffffff;
+  --border-radius: 6px;
+}
+
+/* Alert overlay themed to match the light surface */
+.alert-wrapper {
+  background: #ffffff;
+  border: 1px solid rgba(100, 116, 139, 0.25);
+  border-radius: 14px;
+}
+.alert-wrapper .alert-message {
+  color: #64748b;
+}
+.alert-wrapper .alert-title {
+  color: #0f172a;
+}
+.alert-wrapper .alert-input {
+  color: #0f172a;
+  border-bottom-color: rgba(100, 116, 139, 0.4);
+}
+.alert-wrapper .alert-input::placeholder {
+  color: #94a3b8;
+}
+.alert-wrapper .alert-button {
+  color: #6366f1;
+}
