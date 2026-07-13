@@ -37,6 +37,12 @@ export const useTaskStore = defineStore('day4Tasks', () => {
     tasks.value = tasks.value.filter(t => t.id !== id)
   }
 
+  // Remove every task and reset the id counter
+  function clearAll() {
+    tasks.value = []
+    nextId.value = 1
+  }
+
   // TODO 7: Return everything the component needs to access
-  return { tasks, totalCount, doneCount, pendingCount, addTask, toggleTask, removeTask }
+  return { tasks, totalCount, doneCount, pendingCount, addTask, toggleTask, removeTask, clearAll }
 }, { persist: true })

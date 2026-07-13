@@ -12,4 +12,5 @@ export function useTaskStore(): {
   addTask: (name: string) => void
   toggleTask: (id: number) => void
   removeTask: (id: number) => void
+  clearAll: () => void
 }
