@@ -21,9 +21,9 @@ export const useTaskStore = defineStore('day4Tasks', () => {
   const pendingCount = computed(() => tasks.value.filter(t => !t.done).length)
 
   // TODO 4: Define addTask(name) action
-  function addTask(name) {
+  function addTask(name, priority = 'medium') {
     if (!name.trim()) return
-    tasks.value.push({ id: nextId.value++, name: name.trim(), done: false })
+    tasks.value.push({ id: nextId.value++, name: name.trim(), done: false, priority })
   }
 
   // TODO 5: Define toggleTask(id) action
@@ -43,6 +43,11 @@ export const useTaskStore = defineStore('day4Tasks', () => {
     nextId.value = 1
   }
 
+  function addPhotoToTask(id, path) {
+    const task = tasks.value.find(t => t.id === id)
+    if (task) task.photo = path
+  }
+
   // TODO 7: Return everything the component needs to access
-  return { tasks, totalCount, doneCount, pendingCount, addTask, toggleTask, removeTask, clearAll }
+  return { tasks, totalCount, doneCount, pendingCount, addTask, toggleTask, removeTask, clearAll, addPhotoToTask }
 }, { persist: true })
