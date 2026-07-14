@@ -52,6 +52,9 @@
                 @click="router.push(`/tabs/tasks/${task.id}`)"
               >
                 <ion-checkbox slot="start" v-model="task.done" @click.stop class="mr-4" />
+                <ion-thumbnail v-if="task.photo" slot="start" class="mr-4 h-10 w-10 rounded-lg">
+                  <img :src="task.photo" class="rounded-lg object-cover" />
+                </ion-thumbnail>
                 <ion-label class="text-muted line-through text-base font-medium">
                   {{ task.name }}
                 </ion-label>
@@ -97,7 +100,7 @@ import { computed, ref } from 'vue';
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
   IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption, IonLabel, IonCheckbox,
-  IonIcon, IonSegment, IonSegmentButton
+  IonIcon, IonSegment, IonSegmentButton, IonThumbnail
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { layersOutline, checkmarkDoneOutline, hourglassOutline, trashOutline } from 'ionicons/icons';
