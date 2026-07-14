@@ -18,4 +18,6 @@ export function useTaskStore(): {
   removeTask: (id: number) => void
   clearAll: () => void
   addPhotoToTask: (id: number, path: string) => void
+  saveTasks: () => Promise<void>
+  loadTasks: () => Promise<void>
 }
