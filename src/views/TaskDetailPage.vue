@@ -30,7 +30,20 @@
               <p class="m-0 text-base font-semibold text-foreground">{{ task.done ? 'Completed' : 'Pending' }}</p>
               <p class="mx-0 mb-0 mt-1 text-sm font-medium text-muted">Status</p>
             </div>
+            <PriorityBadge :priority="task.priority ?? 'medium'" class="ml-auto" />
           </div>
+
+          <ion-img v-if="task.photo" :src="task.photo" class="mt-8 rounded-xl border border-muted/25" />
+
+          <ion-button expand="block" fill="outline" class="mt-8" @click="takePhoto">
+            <ion-icon slot="start" :icon="cameraOutline" />
+            {{ task.photo ? 'Retake Photo' : 'Add Photo' }}
+          </ion-button>
+
+          <ion-button expand="block" color="danger" fill="outline" class="mt-4" @click="presentDeleteConfirm">
+            <ion-icon slot="start" :icon="trashOutline" />
+            Delete Task
+          </ion-button>
         </div>
 
         <div v-else class="mt-32 flex flex-col items-center text-center">
@@ -43,16 +56,67 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonIcon
+  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonIcon,
+  IonButton, IonImg, alertController, onIonViewWillEnter
 } from '@ionic/vue';
-import { checkmarkCircleOutline, timeOutline, alertCircleOutline } from 'ionicons/icons';
+import { checkmarkCircleOutline, timeOutline, alertCircleOutline, trashOutline, cameraOutline } from 'ionicons/icons';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useTaskStore } from '@/stores/taskStore';
+import PriorityBadge from '@/components/PriorityBadge.vue';
 
 const route = useRoute();
+const router = useRouter();
 const taskStore = useTaskStore();
 
-const task = computed(() => taskStore.tasks.find(t => t.id === Number(route.params.id)));
+// Ionic keeps previously-visited pages alive and reuses the same
+// component instance for the `tasks/:id` route across different ids,
+// so `setup()` only runs the first time this page is created. Reading
+// `route.params.id` once here would freeze the id at the first task
+// forever. Instead we refresh it every time the page becomes the active
+// view via `onIonViewWillEnter`, which fires on both fresh and reused
+// instances — and, unlike a computed bound to the live route, does not
+// re-point background pages when navigation happens elsewhere.
+const taskId = ref(Number(route.params.id));
+
+onIonViewWillEnter(() => {
+  taskId.value = Number(route.params.id);
+});
+
+const task = computed(() => taskStore.tasks.find(t => t.id === taskId.value));
+
+async function takePhoto() {
+  if (!task.value) return;
+  const photo = await Camera.getPhoto({
+    resultType: CameraResultType.Uri,
+    source: CameraSource.Camera,
+    quality: 90,
+  });
+  if (photo.webPath) {
+    taskStore.addPhotoToTask(taskId.value, photo.webPath);
+  }
+}
+
+async function presentDeleteConfirm() {
+  const alert = await alertController.create({
+    header: 'Delete this task?',
+    message: 'This cannot be undone.',
+    buttons: [
+      { text: 'Cancel', role: 'cancel' },
+      {
+        text: 'Delete',
+        role: 'destructive',
+        handler: () => {
+          if (task.value) {
+            taskStore.removeTask(task.value.id);
+            router.replace('/tabs/tasks');
+          }
+        },
+      },
+    ],
+  });
+  await alert.present();
+}
 </script>

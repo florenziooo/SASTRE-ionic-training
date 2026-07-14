@@ -26,6 +26,16 @@
         </div>
       </div>
 
+      <!-- Priority filter -->
+      <div v-if="completedTasks.length" class="px-5 pt-6">
+        <ion-segment v-model="priorityFilter" mode="md">
+          <ion-segment-button value="all"><ion-label>All</ion-label></ion-segment-button>
+          <ion-segment-button value="low"><ion-label>Low</ion-label></ion-segment-button>
+          <ion-segment-button value="medium"><ion-label>Medium</ion-label></ion-segment-button>
+          <ion-segment-button value="high"><ion-label>High</ion-label></ion-segment-button>
+        </ion-segment>
+      </div>
+
       <!-- Completed list -->
       <div class="px-5">
         <div v-if="completedTasks.length" class="mb-3 mt-8 flex items-center justify-between px-2">
@@ -33,25 +43,31 @@
           <span class="text-sm font-medium text-primary">{{ completedTasks.length }} done</span>
         </div>
 
-        <div v-if="completedTasks.length" class="overflow-hidden rounded-xl border border-muted/30 bg-card shadow-sm">
+        <div v-if="filteredTasks.length" class="overflow-hidden rounded-xl border border-muted/30 bg-card shadow-sm">
           <ion-list class="ds-list">
-            <ion-item
-              v-for="task in completedTasks"
-              :key="task.id"
-              button
-              :detail="false"
-              @click="router.push(`/tabs/tasks/${task.id}`)"
-            >
-              <ion-checkbox slot="start" v-model="task.done" @click.stop class="mr-4" />
-              <ion-label class="text-muted line-through text-base font-medium">
-                {{ task.name }}
-              </ion-label>
-            </ion-item>
+            <ion-item-sliding v-for="task in filteredTasks" :key="task.id">
+              <ion-item
+                button
+                :detail="false"
+                @click="router.push(`/tabs/tasks/${task.id}`)"
+              >
+                <ion-checkbox slot="start" v-model="task.done" @click.stop class="mr-4" />
+                <ion-label class="text-muted line-through text-base font-medium">
+                  {{ task.name }}
+                </ion-label>
+                <PriorityBadge :priority="task.priority ?? 'medium'" slot="end" />
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option color="danger" @click="taskStore.removeTask(task.id)">
+                  <ion-icon slot="icon-only" :icon="trashOutline" />
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
           </ion-list>
         </div>
 
-        <!-- Empty state -->
-        <div v-else class="mt-24 flex flex-col items-center px-8 text-center">
+        <!-- Empty state: nothing completed at all -->
+        <div v-else-if="!completedTasks.length" class="mt-24 flex flex-col items-center px-8 text-center">
           <div class="mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border border-muted/30 bg-card shadow-sm">
             <ion-icon :icon="checkmarkDoneOutline" class="text-4xl text-muted" />
           </div>
@@ -60,20 +76,33 @@
             Completed tasks will show up here once you check them off.
           </p>
         </div>
+
+        <!-- Empty state: filter matches nothing -->
+        <div v-else class="mt-24 flex flex-col items-center px-8 text-center">
+          <div class="mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border border-muted/30 bg-card shadow-sm">
+            <ion-icon :icon="checkmarkDoneOutline" class="text-4xl text-muted" />
+          </div>
+          <h2 class="m-0 text-lg font-semibold text-foreground">No matching tasks</h2>
+          <p class="mx-0 mb-0 mt-2 max-w-xs text-base leading-relaxed text-muted">
+            No completed tasks with this priority.
+          </p>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonList, IonItem, IonLabel, IonCheckbox, IonIcon
+  IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption, IonLabel, IonCheckbox,
+  IonIcon, IonSegment, IonSegmentButton
 } from '@ionic/vue';
 import { useRouter } from 'vue-router';
-import { layersOutline, checkmarkDoneOutline, hourglassOutline } from 'ionicons/icons';
+import { layersOutline, checkmarkDoneOutline, hourglassOutline, trashOutline } from 'ionicons/icons';
 import { useTaskStore } from '@/stores/taskStore';
+import PriorityBadge from '@/components/PriorityBadge.vue';
 
 const taskStore = useTaskStore();
 const router = useRouter();
@@ -83,6 +112,13 @@ const completedTasks = computed(() => taskStore.tasks.filter(task => task.done =
 const totalTasks = computed(() => taskStore.tasks.length);
 const completedCount = computed(() => completedTasks.value.length);
 const pendingTasks = computed(() => totalTasks.value - completedCount.value);
+
+const priorityFilter = ref<'all' | 'low' | 'medium' | 'high'>('all');
+const filteredTasks = computed(() =>
+  completedTasks.value.filter(
+    (t) => priorityFilter.value === 'all' || (t.priority ?? 'medium') === priorityFilter.value
+  )
+);
 </script>
 
 <style scoped>

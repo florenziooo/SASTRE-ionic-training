@@ -33,7 +33,7 @@
           <div class="flex items-center gap-4 border-b border-muted/20 px-5 py-4">
             <ion-icon :icon="moonOutline" class="text-2xl text-muted" />
             <span class="flex-1 text-base font-medium text-foreground">Appearance</span>
-            <span class="text-sm font-medium text-muted">Dark</span>
+            <span class="text-sm font-medium text-muted">Light</span>
           </div>
           <div class="flex items-center gap-4 px-5 py-4">
             <ion-icon :icon="colorPaletteOutline" class="text-2xl text-muted" />
