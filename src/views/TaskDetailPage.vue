@@ -90,12 +90,12 @@ const task = computed(() => taskStore.tasks.find(t => t.id === taskId.value));
 async function takePhoto() {
   if (!task.value) return;
   const photo = await Camera.getPhoto({
-    resultType: CameraResultType.Uri,
+    resultType: CameraResultType.DataUrl,
     source: CameraSource.Camera,
     quality: 90,
   });
-  if (photo.webPath) {
-    taskStore.addPhotoToTask(taskId.value, photo.webPath);
+  if (photo.dataUrl) {
+    taskStore.addPhotoToTask(taskId.value, photo.dataUrl);
   }
 }
 
