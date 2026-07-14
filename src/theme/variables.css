@@ -73,21 +73,23 @@
   --ion-color-tertiary-shade: #55606f;
   --ion-color-tertiary-tint: #7c8896;
 
-  /* success = slate (kept on-palette) */
-  --ion-color-success: #64748b;
-  --ion-color-success-rgb: 100, 116, 139;
+  /* success = green — kept distinct so low-priority
+     badges stay recognizable */
+  --ion-color-success: #22c55e;
+  --ion-color-success-rgb: 34, 197, 94;
   --ion-color-success-contrast: #f8fafc;
   --ion-color-success-contrast-rgb: 248, 250, 252;
-  --ion-color-success-shade: #55606f;
-  --ion-color-success-tint: #7c8896;
+  --ion-color-success-shade: #1eac52;
+  --ion-color-success-tint: #3fca6e;
 
-  /* warning = slate */
-  --ion-color-warning: #64748b;
-  --ion-color-warning-rgb: 100, 116, 139;
-  --ion-color-warning-contrast: #f8fafc;
-  --ion-color-warning-contrast-rgb: 248, 250, 252;
-  --ion-color-warning-shade: #55606f;
-  --ion-color-warning-tint: #7c8896;
+  /* warning = amber — kept distinct so medium-priority
+     badges stay recognizable */
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #d88709;
+  --ion-color-warning-tint: #f7ac2c;
 
   /* danger = red — kept distinct so destructive
      actions (delete) stay recognizable */
